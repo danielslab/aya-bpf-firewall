@@ -13,10 +13,13 @@ use network_types::{
     udp::UdpHdr,
 };
 
+
 #[map]
 static BLOCKLIST_V4: HashMap<u32, u32> = HashMap::with_max_entries(1024, 0);
 #[map]
 static BLOCKLIST_V6: HashMap<u128,u32> = HashMap::with_max_entries(1024, 0);
+#[map]
+static PORT_MONITOR_LIST: HashMap<u32, u32> = HashMap::with_max_entries(1024, 0);
 
 #[xdp]
 pub fn aya_bpf_firewall(ctx: XdpContext) -> u32 {
@@ -76,9 +79,8 @@ fn try_aya_bpf_firewall(ctx: XdpContext) -> Result<u32, ()> {
             };
         
             // (3)
-            if destination_port != 22 {
-                info!(&ctx, "SRC IP: {:i}, DST IP: {:i}, SRC PORT: {}, DST PORT: {}", source_addr, destination_addr, source_port, destination_port);
-            }
+            info!(&ctx, "SRC IP: {:i}, DST IP: {:i}, SRC PORT: {}, DST PORT: {}", source_addr, destination_addr, source_port, destination_port);
+
 
 
         }
