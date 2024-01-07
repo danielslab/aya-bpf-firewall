@@ -1,0 +1,2 @@
+[workspace]
+members = ["xtask", "aya-bpf-firewall", "aya-bpf-firewall-common"]
